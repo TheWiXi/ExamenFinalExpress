@@ -1,0 +1,19 @@
+@import url(variables.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+    align-items: center;
+}
+
+body, html, main {
+    font-family: var(--font-letra);
+    min-height: 100vh;
+    min-width: 100vw;
+}

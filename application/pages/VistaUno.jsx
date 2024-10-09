@@ -1,46 +1,33 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-
-const Start = () => {
-  
+// SCRIPT
+function Start() {
   return (
-    <div className="bg-[#2B292A] min-h-screen p-6 flex flex-col justify-between">
-      {/* Food illustrations */}
-      <div className="relative h-72">
-        {/* Circular food items */}
-        <img src="../public/1.png" alt="food" />
-      </div>
-
-      {/* Text content */}
-      <div className="space-y-2 mb-12">
-        <div className="text-4xl font-bold">
-          <span className="text-emerald-400">Eat</span>
-          <span className="text-white"> Well,</span>
-        </div>
-        <div className="text-4xl font-bold">
-          <span className="text-emerald-400">Feel</span>
-          <span className="text-white"> Well,</span>
-        </div>
-        <div className="text-4xl font-bold">
-          <span className="text-emerald-400">Live</span>
-          <span className="text-white"> Well.</span>
-        </div>
-      </div>
-
-      {/* Bottom navigation dots and button */}
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-2">
-          <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-          <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-          <div className="w-8 h-2 rounded-full bg-emerald-400"></div>
-        </div>
-        <button className="w-14 h-14 rounded-full bg-white flex items-center justify-center">
-          <ArrowRight className="w-6 h-6 text-black" />
+    <div className="StartContainer bg-[#2B292A] w-screen h-screen flex flex-col justify-between">
+      <img src="/269.png" className="backgroundImage1 w-full h-1/2" />
+      <div className="text-center text-6xl font-bold my-4"> 
+        <span className="text-[#93D8A2]">Eat </span> 
+        <span className="text-white">Well,</span>
+        <br />
+        <span className="text-[#93D8A2]">Fell </span>
+        <span className="text-white">Well,</span>
+        <br />
+        <span className="text-[#93D8A2]">Live </span>
+        <span className="text-white">Well.</span>
+      </div> 
+      <div className="buttonContainer flex justify-between w-screen">
+        <button className="px-5 bg-[#2B292A] border-none z-[1] flex items-center">
+          <img src="/options.png" alt="options" />
+        </button>
+        <button className="bg-[#2B292A] border-none z-[1] flex items-center">
+          <Link to="/Login">
+            <img src="/continue.png" alt="Continue" />
+          </Link>
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default Start;

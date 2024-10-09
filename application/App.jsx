@@ -26,7 +26,7 @@ async function profileLoader() {
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/login" />,
+    element: <Start />,
   },
   {
     path: '/login',
@@ -36,10 +36,6 @@ const routes = createBrowserRouter([
     path: '/register',
     element: <Register />,
     action: registerAction,
-  },
-  {
-    path: '/start',
-    element: <Start />
   }
 ]);
 

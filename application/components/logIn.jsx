@@ -39,9 +39,9 @@ export function LogIn() {
 
     return (
         <main className="w-1/2 h-1/2 flex justify-center items-center rounded-lg">
-            <div className="form bg-gray-300 flex flex-col items-start justify-center gap-5 p-5 rounded border-2 border-gray-800 shadow-lg">
+            <div className="form bg-gray-400 flex flex-col items-start justify-center gap-5 p-5 rounded border-2 border-gray-800 shadow-lg">
                 <p className="text-gray-800 font-bold text-xl mb-3 flex flex-col">
-                Bienvenido pa, <span className="text-gray-500 font-semibold text-lg">Logeate para continuar</span>
+                Bienvenido ! <span className="text-gray-500 font-semibold text-lg">Ingresa o registrate.</span>
                 </p>
 
                 <button
@@ -85,8 +85,8 @@ export function LogIn() {
                 className="oauthButton bg-white flex justify-center items-center gap-1 p-2 w-64 h-10 rounded border-2 border-gray-800 shadow-lg font-semibold text-gray-800 relative overflow-hidden transition-all duration-250 hover:text-gray-300"
                 onClick={() => window.open("http://localhost:3000/auth/discord", "_self")}
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 199" className="icon w-6 h-6">
-                    <path fill="#5865f2" d="M216.856 16.597A208.5 208.5 0 0 0 164.042 0c-2.275 4.113-4.933 9.645-6.766 14.046q-29.538-4.442-58.533 0c-1.832-4.4-4.55-9.933-6.846-14.046a207.8 207.8 0 0 0-52.855 16.638C5.618 67.147-3.443 116.4 1.087 164.956c22.169 16.555 43.653 26.612 64.775 33.193A161 161 0 0 0 79.735 175.3a136.4 136.4 0 0 1-21.846-10.632a109 109 0 0 0 5.356-4.237c42.122 19.702 87.89 19.702 129.51 0a132 132 0 0 0 5.355 4.237a136 136 0 0 1-21.886 10.653c4.006 8.02 8.638 15.67 13.873 22.848c21.142-6.58 42.646-16.637 64.815-33.213c5.316-56.288-9.08-105.09-38.056-148.36"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                    <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
                 </svg>
                 Continúa con Discord
                 </button>

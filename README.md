@@ -115,3 +115,59 @@ GitHub: Para la gestión de versiones del código y colaboración en el desarrol
 README: El archivo README incluirá documentación sobre cómo clonar el proyecto, cómo instalar las dependencias y la documentación de la API de la versión 2.0.0 solamente.
 
 Se debe entregar un repositorio en GitHub privado (compartido a las cuentas que el Trainer indique) junto con el hash del commit que será calificado.
+
+### USO del API
+
+La api cuenta con dos versiones v1 y v2 con la unica diferencia que el v2 tiene un limitador de solicitudes.
+
+IMPORTANTE !!
+
+TODAS LAS SOLICITUDES DEBEN CONTENER EL ENCABEZADO: content-Type application.json
+
+y solo si es requerido el encabezado: Authorization Bearer TOKENDEINICIODESESION.
+
+### URL BASE
+
+```
+http://localhost:3000/versionapi
+```
+
+**Usuarios**
+
+* **Registro de usuarios:**
+  Solicitud: POST
+  NO REQUIERE AUTENTICACION
+  DATOS OBLIGATORIOS EN EL BODY
+  ```
+  {
+  name: "string",
+  email : "string",
+  password : "string"
+  }
+  ```
+
+  **RESPUESTAS:**
+* 201 CREACION EXITOSA
+* 500 ERROR (mensaje especificando el posible error)
+* **Inicio de sesion (obtencion de token):**
+  Solicitud: POST
+  NO REQUIERE AUTENTICACION
+  DATOS OBLIGATORIOS EN EL BODY:
+  ```
+  {
+  email :"string",
+  password: "string"
+  }
+  ```
+
+    **RESPUESTAS**
+
+* 200 OK (devuelve id, nombre,correo y token del usuario)
+* 401 contraseña o correo incorrector
+* 500 ERROR (mensaje especificando posible error)
+
+**Comidas**
+
+* **Registro o creacion de comidas:**
+  Solicitud: POST
+  REQUIERE TOKEN DE AUTENTICACION

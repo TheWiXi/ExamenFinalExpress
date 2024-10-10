@@ -116,58 +116,363 @@ README: El archivo README incluirá documentación sobre cómo clonar el proyect
 
 Se debe entregar un repositorio en GitHub privado (compartido a las cuentas que el Trainer indique) junto con el hash del commit que será calificado.
 
-### USO del API
 
-La api cuenta con dos versiones v1 y v2 con la unica diferencia que el v2 tiene un limitador de solicitudes.
+# Documentación API 
 
-IMPORTANTE !!
-
-TODAS LAS SOLICITUDES DEBEN CONTENER EL ENCABEZADO: content-Type application.json
-
-y solo si es requerido el encabezado: Authorization Bearer TOKENDEINICIODESESION.
-
-### URL BASE
+## Base URL
 
 ```
-http://localhost:3000/versionapi
+http://localhost:3000/api/v1
 ```
 
-**Usuarios**
+Para la versión 2 (con rate limiting), usa:
 
-* **Registro de usuarios:**
-  Solicitud: POST
-  NO REQUIERE AUTENTICACION
-  DATOS OBLIGATORIOS EN EL BODY
-  ```
+```
+http://localhost:3000/api/v2
+```
+
+## Autenticación
+
+La mayoría de los endpoints requieren un token JWT. Incluye el token en el header de la siguiente manera:
+
+```
+Authorization: Bearer <tu_token_jwt>
+```
+
+---
+
+## Endpoints de Usuarios
+
+### 1. Registro de Usuario
+
+- **URL**: `/users/register`
+- **Método**: `POST`
+- **Auth requerida**: No
+- **Datos requeridos**:
+
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+- **Ejemplo de solicitud**:
+
+```bash
+POST http://localhost:3000/api/v1/users/register \
+  Header: "Content-Type: application/json" \
+  Body: '{
+    "name": "Juan Pérez",
+    "email": "juan@example.com",
+    "password": "password123"
+  }'
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "user_id",
+  "name": "Juan Pérez",
+  "email": "juan@example.com",
+  "token": "jwt_token"
+}
+```
+
+### 2. Inicio de Sesión
+
+- **URL**: `/users/login`
+- **Método**: `POST`
+- **Auth requerida**: No
+- **Datos requeridos**:
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+- **Ejemplo de solicitud**:
+
+```bash
+ POST http://localhost:3000/api/v1/users/login \
+  Header: "Content-Type: application/json" \
+  Body: '{
+    "email": "juan@example.com",
+    "password": "password123"
+  }'
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "user_id",
+  "name": "Juan Pérez",
+  "email": "juan@example.com",
+  "token": "jwt_token"
+}
+```
+
+---
+
+## Endpoints de Comidas
+
+### 1. Crear Nueva Comida
+
+- **URL**: `/foods`
+- **Método**: `POST`
+- **Auth requerida**: Sí
+- **Datos requeridos**:
+
+```json
+{
+  "name": "string",
+  "category": "string",
+  "calories": "number",
+  "ingredients": ["string"],
+  "price": "number"
+}
+```
+
+- **Ejemplo de solicitud**:
+
+```bash
+ POST http://localhost:3000/api/v1/foods \
+  Header: "Content-Type: application/json" \
+  Header: "Authorization: Bearer <tu_token_jwt>" \
+  Body: '{
+    "name": "Ensalada César",
+    "category": "ensaladas",
+    "calories": 350,
+    "ingredients": ["lechuga", "pollo", "crutones", "queso parmesano"],
+    "price": 12.99
+  }'
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "food_id",
+  "name": "Ensalada César",
+  "category": "ensaladas",
+  "calories": 350,
+  "ingredients": ["lechuga", "pollo", "crutones", "queso parmesano"],
+  "price": 12.99,
+  "averageRating": 0
+}
+```
+
+### 2. Obtener Todas las Comidas
+
+- **URL**: `/foods`
+- **Método**: `GET`
+- **Auth requerida**: No
+- **Parámetros de consulta opcionales**:
+  - `category`: Filtrar por categoría
+- **Ejemplo de solicitud**:
+
+```bash
+# Todas las comidas
+curl http://localhost:3000/api/v1/foods
+
+# Filtrar por categoría
+curl http://localhost:3000/api/v1/foods?category=ensaladas
+```
+
+- **Respuesta exitosa**:
+
+```json
+[
   {
-  name: "string",
-  email : "string",
-  password : "string"
-  }
-  ```
+    "_id": "food_id",
+    "name": "Ensalada César",
+    "category": "ensaladas",
+    "calories": 350,
+    "ingredients": ["lechuga", "pollo", "crutones", "queso parmesano"],
+    "price": 12.99,
+    "averageRating": 4.5
+  },
+  // ... más comidas
+]
+```
 
-  **RESPUESTAS:**
-* 201 CREACION EXITOSA
-* 500 ERROR (mensaje especificando el posible error)
-* **Inicio de sesion (obtencion de token):**
-  Solicitud: POST
-  NO REQUIERE AUTENTICACION
-  DATOS OBLIGATORIOS EN EL BODY:
-  ```
+### 3. Obtener Comida por ID
+
+- **URL**: `/foods/:id`
+- **Método**: `GET`
+- **Auth requerida**: No
+- **Ejemplo de solicitud**:
+
+```bash
+curl http://localhost:3000/api/v1/foods/food_id
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "food_id",
+  "name": "Ensalada César",
+  "category": "ensaladas",
+  "calories": 350,
+  "ingredients": ["lechuga", "pollo", "crutones", "queso parmesano"],
+  "price": 12.99,
+  "averageRating": 4.5
+}
+```
+
+---
+
+## Endpoints de Valoraciones
+
+### 1. Crear Nueva Valoración
+
+- **URL**: `/ratings`
+- **Método**: `POST`
+- **Auth requerida**: Sí
+- **Datos requeridos**:
+
+```json
+{
+  "foodId": "string",
+  "rating": "number"
+}
+```
+
+- **Ejemplo de solicitud**:
+
+```bash
+ POST http://localhost:3000/api/v1/ratings \
+  Header: "Content-Type: application/json" \
+  Header: "Authorization: Bearer <tu_token_jwt>" \
+  Body: '{
+    "foodId": "food_id",
+    "rating": 5
+  }'
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "rating_id",
+  "foodId": "food_id",
+  "userId": "user_id",
+  "rating": 5
+}
+```
+
+---
+
+## Endpoints de Pedidos
+
+### 1. Crear Nuevo Pedido
+
+- **URL**: `/orders`
+- **Método**: `POST`
+- **Auth requerida**: Sí
+- **Datos requeridos**:
+
+```json
+{
+  "items": [
+    {
+      "foodId": "string",
+      "quantity": "number"
+    }
+  ]
+}
+```
+
+- **Ejemplo de solicitud**:
+
+```bash
+ POST http://localhost:3000/api/v1/orders \
+  Header: "Content-Type: application/json" \
+  Header: "Authorization: Bearer <tu_token_jwt>" \
+  Body: '{
+    "items": [
+      {
+        "foodId": "food_id",
+        "quantity": 2
+      },
+      {
+        "foodId": "food_id_2",
+        "quantity": 1
+      }
+    ]
+  }'
+```
+
+- **Respuesta exitosa**:
+
+```json
+{
+  "_id": "order_id",
+  "userId": "user_id",
+  "items": [
+    {
+      "foodId": "food_id",
+      "quantity": 2
+    },
+    {
+      "foodId": "food_id_2",
+      "quantity": 1
+    }
+  ],
+  "total": 42.97
+}
+```
+
+### 2. Obtener Pedidos del Usuario
+
+- **URL**: `/orders/my-orders`
+- **Método**: `GET`
+- **Auth requerida**: Sí
+- **Ejemplo de solicitud**:
+
+```bash
+curl http://localhost:3000/api/v1/orders/my-orders \
+  Header: "Authorization: Bearer <tu_token_jwt>"
+```
+
+- **Respuesta exitosa**:
+
+```json
+[
   {
-  email :"string",
-  password: "string"
-  }
-  ```
+    "_id": "order_id",
+    "userId": "user_id",
+    "items": [
+      {
+        "foodId": {
+          "_id": "food_id",
+          "name": "Ensalada César",
+          "price": 12.99
+        },
+        "quantity": 2
+      }
+    ],
+    "total": 25.98
+  },
+  // ... más pedidos
+]
+```
 
-    **RESPUESTAS**
+## Códigos de Error Comunes
 
-* 200 OK (devuelve id, nombre,correo y token del usuario)
-* 401 contraseña o correo incorrector
-* 500 ERROR (mensaje especificando posible error)
+- 400 Bad Request - Datos inválidos en la solicitud
+- 401 Unauthorized - Token no proporcionado o inválido
+- 404 Not Found - Recurso no encontrado
+- 500 Internal Server Error - Error del servidor
 
-**Comidas**
+## Notas Adicionales
 
-* **Registro o creacion de comidas:**
-  Solicitud: POST
-  REQUIERE TOKEN DE AUTENTICACION
+1. Todos los endpoints de la versión 2 (v2) tienen un límite de tasa de 100 solicitudes por 15 minutos por IP.
+2. Los IDs en los ejemplos son representativos. En la práctica, MongoDB generará IDs únicos.
+3. Asegúrate de guardar el token JWT cuando inicies sesión o te registres, lo necesitarás para las solicitudes autenticadas.
